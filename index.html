@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <title>video player</title>
+  </head>
+  <body>
+    <div class='video-container'>
+      
+      <img src="./images/svg/PlayBig.svg" alt="play" id="bigplay">
+      <video src="./video/video0.mp4" poster="./images/poster.png" class='video-player' id='video-player' preload='metadata'>
+    
+    
+    </video>
+      
+      <div class='video-hud'>
+         <!-- кнопка воспроизвести предыдущее видео -->
+        <div class='video-hud__element video-hud__action video-hud__action_play_left' id='video-hud__action_play_left' ></div>
+         <!-- кнопка воспроизвести видео -->
+      <div class='video-hud__element video-hud__action video-hud__action_play' id='video-hud__action'></div>
+       <!-- кнопка воспроизвести следуйщее видео -->
+      <div class='video-hud__element video-hud__action video-hud__action_play_right' id='video-hud__action_play_right'></div>
+
+
+      
+      <div class='video-hud__element video-hud__curr-time' id='video-hud__curr-time'>00:00</div>
+      
+      <input type="range" value='0' max='100' class='video-hud__element video-hud__progress-bar' id='video-hud__progress-bar'>
+      
+      <div class='video-hud__element video-hud__duration' id='video-hud__duration'>00:00</div>
+      
+      <div class='video-hud__element video-hud__mute video-hud__mute' id='video-hud__mute'></div>
+      
+      <input type='range' value='100' max='100' title='Громкость' class='video-hud__element video-hud__volume' id='video-hud__volume'>
+      
+      <div class='video-hud__element video-hud__action video-hud__action_full_screen' id='video-hud__action_full_screen'></div>
+      
+      </div>
+      
+      </div>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
