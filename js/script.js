@@ -5,8 +5,8 @@ var progressBar = document.getElementById("video-hud__progress-bar");
 var currTime = document.getElementById("video-hud__curr-time");
 var durationTime = document.getElementById("video-hud__duration");
 //Кнопки
-var leftButton = document.getElementById("video-hud__action_play_left")
-var rightButton = document.getElementById("video-hud__action_play_right")
+var leftButton = document.getElementById("video-hud__action_play_left");
+var rightButton = document.getElementById("video-hud__action_play_right");
 var playButton = document.getElementById("video-hud__action");
 var bigPlayButton = document.getElementById("bigplay");
 var muteButton = document.getElementById("video-hud__mute");
@@ -14,24 +14,16 @@ var volumeScale = document.getElementById("video-hud__volume");
 var speedSelect = document.getElementById("video-hud__speed");
 var fullScreen = document.getElementById("video-hud__action_full_screen");
 
-
-function speedUp() {
-    videoPlayer.play();
-    videoPlayer.playbackRate = 2;
-}
-
+///// скорость воспроизведениея
 function slowDown() {
-    videoPlayer.play();
-    videoPlayer.playbackRate = 0.5;
+  videoPlayer.play();
+  videoPlayer.playbackRate = 0.5;
 }
-videoPlayer.addEventListener('keydown', (event) => {
-    if (event.code == "keyE") {
-        speedUp()
-    }
-    else if (event.code == "KeyQ") {
-        slowDown()
-    }
-})
+function speedUp() {
+  videoPlayer.play();
+  videoPlayer.playbackRate = 1.5;
+}
+
 function videoAct() {
   if (videoPlayer.paused) {
     videoPlayer.play();
@@ -49,17 +41,31 @@ function videoAct() {
     );
   }
   if (durationTime.innerHTML == "00:00") {
-    durationTime.innerHTML = videoTime(videoPlayer.duration); //Об этой функции чуть ниже
+    durationTime.innerHTML = videoTime(videoPlayer.duration);
   }
 }
-document.addEventListener('keydown', (event) => {
-    if (event.code == "Space") {
-        videoAct()
-    }
-})
+rightButton.addEventListener("click", nextVideo);
+leftButton.addEventListener("click", previuosVideo);
 playButton.addEventListener("click", videoAct);
-
 videoPlayer.addEventListener("click", videoAct);
+let counter = 0;
+function nextVideo() {
+  if (counter == 5) {
+    counter = 0;
+  }
+  videoPlayer.setAttribute("src", ` ./video/video${counter++}.mp4`);
+  videoPlayer.play();
+  console.log(counter,' counter++')
+}
+function previuosVideo() {
+  if (counter == -1) {
+    counter = 4;
+  }
+  videoPlayer.setAttribute("src", ` ./video/video${counter--}.mp4`);
+  videoPlayer.play();
+  console.log(counter,' counter--')
+}
+
 
 function videoTime(time) {
   //Рассчитываем время в секундах и минутах
@@ -150,7 +156,28 @@ function videoMute() {
 }
 
 let flagSound = 0;
+let flag = 0;
 document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyJ") {
+    videoPlayer.currentTime -= 10;
+  } else if (event.code == "KeyL") {
+    videoPlayer.currentTime += 10;
+  }
+  if (event.code == "Period") {
+    speedUp();
+  } else if (event.code == "Comma") {
+    slowDown();
+  }
+  if (event.code == "Space") {
+    videoAct();
+  }
+  if (event.code == "KeyF" && flag === 0) {
+    launchFullScreen();
+    flag++;
+  } else if (event.code == "KeyF" && flag === 1) {
+    cancelFullscreen();
+    flag = 0;
+  }
   if (event.code == "KeyM" && flagSound === 0) {
     muteButton.setAttribute(
       "class",
@@ -171,16 +198,7 @@ fullScreen.addEventListener("click", () => {
   videoPlayer.requestFullscreen();
 });
 // элемент который в данный момент находится в полноэкранним режиме
-let flag = 0;
-document.addEventListener("keydown", (event) => {
-  if (event.code == "KeyF" && flag === 0) {
-    launchFullScreen();
-    flag++;
-  } else if (event.code == "KeyF" && flag === 1) {
-    cancelFullscreen();
-    flag = 0;
-  }
-});
+
 //Запустить отображение в полноэкранном режиме
 function launchFullScreen() {
   if (videoPlayer.requestFullScreen) {
