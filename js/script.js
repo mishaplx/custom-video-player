@@ -105,12 +105,13 @@ function videoProgress() {
 
 function videoChangeTime(e) {
   //Перематываем
+  let wProgBar = progressBar.offsetWidth;
+    let wClick = e.offsetX;
+    progressBar.value = (wClick / wProgBar) * 100;
+    videoPlayer.pause();
+    videoPlayer.currentTime = videoPlayer.duration * (wClick / wProgBar);
+    videoPlayer.play();
 
-  var mouseX = Math.floor(e.pageX - progressBar.offsetLeft);
-
-  var progress = mouseX / (progressBar.offsetWidth / 100);
-
-  videoPlayer.currentTime = videoPlayer.duration * (progress / 100);
 }
 //Отображение времени
 videoPlayer.addEventListener("timeupdate", videoProgress);
@@ -129,13 +130,11 @@ function videoChangeVolume() {
       "class",
       "video-hud__element video-hud__mute video-hud__mute_false"
     );
-  } else if (videoPlayer.value > 50) {
-    muteButton.setAttribute("class", "video-hud__mute video-hud__mute");
-  } else if (videoPlayer.value < 50 || videoPlayer.value != 0) {
-    muteButton.setAttribute("class", "video-hud__mute video-hud__mute_50");
-  } else {
+  }
+   else {
     muteButton.setAttribute("class", "video-hud__element video-hud__mute");
   }
+  
 }
 
 function videoMute() {
@@ -157,6 +156,8 @@ function videoMute() {
 
 let flagSound = 0;
 let flag = 0;
+
+
 document.addEventListener("keydown", (event) => {
   if (event.code == "KeyJ") {
     videoPlayer.currentTime -= 10;
@@ -179,12 +180,17 @@ document.addEventListener("keydown", (event) => {
     flag = 0;
   }
   if (event.code == "KeyM" && flagSound === 0) {
+    videoPlayer.volume = 0
+    volumeScale.value = 0
     muteButton.setAttribute(
       "class",
       "video-hud__element video-hud__mute video-hud__mute_false"
     );
     flagSound++;
   } else if (event.code == "KeyM" && flagSound === 1) {
+    
+    videoPlayer.volume = 1
+    volumeScale.value = 100
     muteButton.setAttribute("class", "video-hud__element video-hud__mute");
     flagSound = 0;
   }
