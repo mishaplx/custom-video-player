@@ -4,6 +4,23 @@
   border: 0px;
 }
 
+span {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.console {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 20px;
+}
+
+.console .description {
+  font-weight: 400;
+  margin-right: 20px;
+}
+
 body {
   margin: 0px;
 }

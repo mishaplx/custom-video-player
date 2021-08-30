@@ -17,11 +17,12 @@ var fullScreen = document.getElementById("video-hud__action_full_screen");
 ///// скорость воспроизведениея
 function slowDown() {
   videoPlayer.play();
-  videoPlayer.playbackRate = 0.5;
+  videoPlayer.playbackRate -= 0.5;
 }
 function speedUp() {
   videoPlayer.play();
-  videoPlayer.playbackRate = 1.5;
+  videoPlayer.playbackRate += 0.5;
+  
 }
 
 function videoAct() {
@@ -50,20 +51,23 @@ playButton.addEventListener("click", videoAct);
 videoPlayer.addEventListener("click", videoAct);
 let counter = 0;
 function nextVideo() {
-  if (counter == 5) {
+  counter++
+  if (counter == 3) {
     counter = 0;
   }
-  videoPlayer.setAttribute("src", ` ./video/video${counter++}.mp4`);
+  videoPlayer.setAttribute("src", `./video/video${counter}.mp4`);
   videoPlayer.play();
-  console.log(counter,' counter++')
+ 
 }
 function previuosVideo() {
+  counter--
   if (counter == -1) {
-    counter = 4;
+    counter = 2;
   }
-  videoPlayer.setAttribute("src", ` ./video/video${counter--}.mp4`);
+  
+  videoPlayer.setAttribute("src", `./video/video${counter}.mp4`);
   videoPlayer.play();
-  console.log(counter,' counter--')
+ 
 }
 
 
@@ -159,6 +163,14 @@ let flag = 0;
 
 
 document.addEventListener("keydown", (event) => {
+  if (event.code == "KeyP"){
+    previuosVideo()
+    
+  }
+  if (event.code == "KeyN"){
+    nextVideo()
+    
+  }
   if (event.code == "KeyJ") {
     videoPlayer.currentTime -= 10;
   } else if (event.code == "KeyL") {
@@ -169,7 +181,7 @@ document.addEventListener("keydown", (event) => {
   } else if (event.code == "Comma") {
     slowDown();
   }
-  if (event.code == "Space") {
+  if (event.code == "Space" || event.code == 'KeyK') {
     videoAct();
   }
   if (event.code == "KeyF" && flag === 0) {
